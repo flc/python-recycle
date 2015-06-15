@@ -52,3 +52,13 @@ def seconds_to_str(seconds):
     elif seconds >= 60 * 60:
         output = "%dh " % (seconds / 3600) + seconds_to_str(seconds % 3600)
     return output
+
+
+def dec_to_bin_int_list(dec):
+    """
+    Converts a decimal value into a binary string and returns a
+    list of integers where the binary bit is 1.
+    eg: 32791 -> 1000000000010111 -> [15, 4, 2, 1, 0]
+    """
+    bits = bin(dec)[2:]
+    return [pos for pos, v in zip(range(len(bits) - 1, -1, -1), bits) if int(v)]
