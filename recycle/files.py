@@ -34,7 +34,7 @@ def gzip_compress_existing_file(path, keep_original=False, compresslevel=9):
 def tail_file(path, num=100, open_func=open):
     lines = file_line_count(path, open_func)
     tail_lines = []
-    tail_from = lines - num
+    tail_from = max(lines - num, 0)
     with open_func(path) as f:
         for idx, line in enumerate(f, 1):
             if idx > tail_from <= lines:
@@ -54,7 +54,7 @@ def tail_file_bytes(path, bytes=1000):
     else:
         size = os.path.getsize(path)
         open_func = open
-    jump_to = size - bytes
+    jump_to = max(size - bytes, 0)
     with open_func(path) as f:
         f.seek(jump_to)
         for line in f:
