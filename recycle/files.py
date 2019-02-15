@@ -1,9 +1,10 @@
 import gzip
 import os
+import struct
 
 
-def file_line_count(filename):
-    with open(filename) as f:
+def file_line_count(path, open_func=open):
+    with open_func(path) as f:
         lines = 0
         buf_size = 1024 * 1024
         read_f = f.read  # loop optimization
@@ -28,3 +29,33 @@ def gzip_compress_existing_file(path, keep_original=False, compresslevel=9):
         os.unlink(path)
 
     return new_path
+
+
+def tail_file(path, num=100, open_func=open):
+    lines = file_line_count(path, open_func)
+    tail_lines = []
+    tail_from = lines - num
+    with open_func(path) as f:
+        for idx, line in enumerate(f, 1):
+            if idx > tail_from <= lines:
+                yield line
+
+
+def get_gzip_uncompressed_size(path):
+    with open(path, 'rb') as f:
+        f.seek(-4, 2)
+        return struct.unpack('I', f.read(4))[0]
+
+
+def tail_file_bytes(path, bytes=1000):
+    if path.endswith('.gz'):
+        size = get_gzip_uncompressed_size(path)
+        open_func = gzip.open
+    else:
+        size = os.path.getsize(path)
+        open_func = open
+    jump_to = size - bytes
+    with open_func(path) as f:
+        f.seek(jump_to)
+        for line in f:
+            yield line
