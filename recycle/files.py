@@ -5,7 +5,7 @@ import hashlib
 import six
 
 
-def file_line_count(path, open_func=open, buf_size=1024*1024):
+def file_line_count(path, open_func=open, buf_size=1024**2):
     with open_func(path) as f:
         lines = 0
         read_f = f.read  # loop optimization
