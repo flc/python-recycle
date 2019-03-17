@@ -1,12 +1,13 @@
 import gzip
 import os
 import struct
+import hashlib
+import six
 
 
-def file_line_count(path, open_func=open):
+def file_line_count(path, open_func=open, buf_size=1024*1024):
     with open_func(path) as f:
         lines = 0
-        buf_size = 1024 * 1024
         read_f = f.read  # loop optimization
 
         buf = read_f(buf_size)
@@ -59,3 +60,14 @@ def tail_file_bytes(path, bytes=1000):
         f.seek(jump_to)
         for line in f:
             yield line
+
+
+def checksum_file(path, hasher_func=hashlib.md5, buf_size=1024**2):
+    hasher = hasher_func()
+    with open(path, 'rb') as f:
+        read_f = f.read  # loop optimization
+        buf = read_f(buf_size)
+        while len(buf) > 0:
+            hasher.update(buf)
+            buf = read_f(buf_size)
+    return hasher.hexdigest()
