@@ -4,23 +4,47 @@ from bisect import insort_left, insort_right
 
 
 class OrderedDefaultdict(collections.OrderedDict):
+    # Source: http://stackoverflow.com/a/6190500/562769
+    def __init__(self, default_factory=None, *a, **kw):
+        if (default_factory is not None and
+           not isinstance(default_factory, collections.Callable)):
+            raise TypeError('first argument must be callable')
+        collections.OrderedDict.__init__(self, *a, **kw)
+        self.default_factory = default_factory
 
-    def __init__(self, *args, **kwargs):
-        newdefault = None
-        newargs = ()
-        if args:
-            newdefault = args[0]
-            if not callable(newdefault) and newdefault is not None:
-                raise TypeError('first argument must be callable or None')
-            newargs = args[1:]
-        self.default_factory = newdefault
-        super(self.__class__, self).__init__(*newargs, **kwargs)
+    def __getitem__(self, key):
+        try:
+            return collections.OrderedDict.__getitem__(self, key)
+        except KeyError:
+            return self.__missing__(key)
 
     def __missing__(self, key):
         if self.default_factory is None:
             raise KeyError(key)
         self[key] = value = self.default_factory()
         return value
+
+    def __reduce__(self):
+        if self.default_factory is None:
+            args = tuple()
+        else:
+            args = self.default_factory,
+        return type(self), args, None, None, self.items()
+
+    def copy(self):
+        return self.__copy__()
+
+    def __copy__(self):
+        return type(self)(self.default_factory, self)
+
+    def __deepcopy__(self, memo):
+        import copy
+        return type(self)(self.default_factory,
+                          copy.deepcopy(self.items()))
+
+    def __repr__(self):
+        return 'OrderedDefaultDict(%s, %s)' % (self.default_factory,
+                                               collections.OrderedDict.__repr__(self))
 
 
 # {{{ http://code.activestate.com/recipes/576694/ (r9)
