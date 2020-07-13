@@ -62,3 +62,29 @@ def dec_to_bin_int_list(dec):
     """
     bits = bin(dec)[2:]
     return [pos for pos, v in zip(range(len(bits) - 1, -1, -1), bits) if int(v)]
+
+
+def prefix_dict_keys(dictionary, prefix):
+    """
+    Prefixes the keys of the dictionary with prefix.
+    """
+    return dict(
+        ("".join([prefix, k]), v)
+        for k,v in dictionary.items()
+        )
+
+
+def words_splitter(s, chars=75, delimiter="\n", splitter=" "):
+    words = s.split(splitter)
+    out = []
+    sub = []
+    c = 0
+    for w in words:
+        c += len(w)
+        sub.append(w)
+        if c >= chars:
+            out.append(sub)
+            c = 0
+            sub = []
+    out.append(sub)
+    return delimiter.join([splitter.join(s) for s in out])
