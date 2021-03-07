@@ -1,5 +1,6 @@
 # based on http://code.activestate.com/recipes/577610-decoding-binary-files/
 import struct
+import six
 
 
 class BinaryReaderEOFException(Exception):
@@ -28,7 +29,7 @@ class BinaryReader(object):
         }
 
     def __init__(self, path_or_buff):
-        if isinstance(path_or_buff, basestring):
+        if isinstance(path_or_buff, six.string_types):
             self.file = open(path_or_buff, 'rb')
         else:
             self.file = path_or_buff
