@@ -1,0 +1,6 @@
+[flake8]
+select = C,E,F,W,DJ,DJ10,DJ11
+ignore = F405,F403,E123,W503,DJ08
+exclude = .git,.tox,__pycache__,docs/source/conf.py,old,build,dist,migrations
+max-line-length = 119
+; max-complexity = 15

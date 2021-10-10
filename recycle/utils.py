@@ -22,8 +22,8 @@ def gen_random_id(size=10):
         the length of the generated string
         default is 10
     """
-    digits = [unicode(random.randint(1, 9))]
-    digits.extend([unicode(random.randint(0, 9)) for _ in xrange(0, size - 1)])
+    digits = [str(random.randint(1, 9))]
+    digits.extend([str(random.randint(0, 9)) for _ in range(0, size - 1)])
     return ''.join(digits)
 
 
@@ -35,8 +35,10 @@ def gen_random_string(length=10):
     :param length:
         the length of the generated string
     """
-    return ''.join([random.choice(string.ascii_letters + string.digits)
-                    for i in range(length)])
+    return ''.join([
+        random.choice(string.ascii_letters + string.digits)
+        for i in range(length)
+    ])
 
 
 def pretty_time(seconds):
@@ -70,8 +72,8 @@ def prefix_dict_keys(dictionary, prefix):
     """
     return dict(
         ("".join([prefix, k]), v)
-        for k,v in dictionary.items()
-        )
+        for k, v in dictionary.items()
+    )
 
 
 def words_splitter(s, chars=75, delimiter="\n", splitter=" "):

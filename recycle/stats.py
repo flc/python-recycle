@@ -4,7 +4,7 @@ import numpy as np
 def gen_histogram_mem_eff(
     numbers, min_value, max_value, num_bins,
     coerce=float, progress_callback=None, progress_size=10000,
-    ):
+):
     """
     Generates histogram data from an iterable of numbers memory efficiently
     with a predefined range and number of bins.
@@ -32,4 +32,3 @@ def gen_histogram_mem_eff(
         hist += h
 
     return hist, bins
-

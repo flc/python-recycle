@@ -13,7 +13,7 @@ def lookupattr(obj, name, default=None):
                 except (KeyError, TypeError):
                     attr = default
                     break
-        except:
+        except Exception:
             attr = default
             break
         if callable(attr):

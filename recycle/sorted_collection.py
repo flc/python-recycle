@@ -170,14 +170,14 @@ class SortedCollection(object):
         'Return last item with a key <= k.  Raise ValueError if not found.'
         i = bisect_right(self._keys, k)
         if i:
-            return self._items[i-1]
+            return self._items[i - 1]
         raise ValueError('No item found with key at or below: %r' % (k,))
 
     def find_lt(self, k):
         'Return last item with a key < k.  Raise ValueError if not found.'
         i = bisect_left(self._keys, k)
         if i:
-            return self._items[i-1]
+            return self._items[i - 1]
         raise ValueError('No item found with key below: %r' % (k,))
 
     def find_ge(self, k):
@@ -286,7 +286,7 @@ if __name__ == '__main__':
         assert item == sd[i]
     sd.insert('jUmPeD')
     sd.insert_right('QuIcK')
-    assert sd._keys ==['BROWN', 'FOX', 'JUMPED', 'JUMPED', 'QUICK', 'QUICK', 'THE']
+    assert sd._keys == ['BROWN', 'FOX', 'JUMPED', 'JUMPED', 'QUICK', 'QUICK', 'THE']
     assert sd._items == ['Brown', 'Fox', 'jUmPeD', 'jumped', 'quick', 'QuIcK', 'The']
     assert sd.find_le('JUMPED') == 'jumped', sd.find_le('JUMPED')
     assert sd.find_ge('JUMPED') == 'jUmPeD'
@@ -294,7 +294,7 @@ if __name__ == '__main__':
     assert sd.find_ge('GOAT') == 'jUmPeD'
     assert sd.find('FOX') == 'Fox'
     assert sd[3] == 'jumped'
-    assert sd[3:5] ==['jumped', 'quick']
+    assert sd[3:5] == ['jumped', 'quick']
     assert sd[-2] == 'QuIcK'
     assert sd[-4:-2] == ['jumped', 'quick']
     for i, item in enumerate(sd):
@@ -308,6 +308,6 @@ if __name__ == '__main__':
     sd.remove('jumped')
     assert list(sd) == ['Brown', 'Fox', 'jUmPeD', 'quick', 'QuIcK', 'The']
 
+    assert False
     import doctest
-    from operator import itemgetter
     print(doctest.testmod())

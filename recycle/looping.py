@@ -1,3 +1,4 @@
+import six
 import itertools
 
 
@@ -38,7 +39,11 @@ def grouper(size, iterable):
 def fixed_size_grouper(n, iterable, fillvalue=None):
     """Collect data into fixed-length chunks or blocks"""
     args = [iter(iterable)] * n
-    return itertools.izip_longest(fillvalue=fillvalue, *args)
+    if six.PY3:
+        func = itertools.zip_longest
+    else:
+        func = itertools.izip_longest
+    return func(fillvalue=fillvalue, *args)
 
 
 def flatten(iterable):

@@ -2,7 +2,6 @@ import gzip
 import os
 import struct
 import hashlib
-import six
 
 
 def file_line_count(path, open_func=open, buf_size=1024**2):
@@ -34,7 +33,6 @@ def gzip_compress_existing_file(path, keep_original=False, compresslevel=9):
 
 def tail_file(path, num=100, open_func=open):
     lines = file_line_count(path, open_func)
-    tail_lines = []
     tail_from = max(lines - num, 0)
     with open_func(path) as f:
         for idx, line in enumerate(f, 1):
