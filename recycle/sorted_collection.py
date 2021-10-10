@@ -1,5 +1,6 @@
 # http://code.activestate.com/recipes/577197-sortedcollection/
 from bisect import bisect_left, bisect_right
+from operator import itemgetter
 
 
 class SortedCollection(object):
@@ -74,7 +75,10 @@ class SortedCollection(object):
     def __init__(self, iterable=(), key=None):
         self._given_key = key
         key = (lambda x: x) if key is None else key
-        decorated = sorted((key(item), item) for item in iterable)
+        decorated = sorted(
+            ((key(item), item) for item in iterable),
+            key=itemgetter(0)
+        )
         self._keys = [k for k, item in decorated]
         self._items = [item for k, item in decorated]
         self._key = key
