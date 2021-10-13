@@ -17,7 +17,8 @@ def split_to_equal_parts(iterable, length):
 
 
 def gen_random_id(size=10):
-    """
+    """Generates a random ID consisting only numbers. The first number can not be zero.
+
     :param size:
         the length of the generated string
         default is 10
@@ -27,18 +28,16 @@ def gen_random_id(size=10):
     return ''.join(digits)
 
 
-def gen_random_string(length=10):
+def gen_random_string(length=10, alphabet=string.ascii_letters + string.digits):
     """
-    Generates a random string that contains only
-    ascii letters and digits.
+    Generates a random string from a given alphabet.
+    The default alphabet contains ascii letters and digits.
 
     :param length:
         the length of the generated string
+    :param alphabet:
     """
-    return ''.join([
-        random.choice(string.ascii_letters + string.digits)
-        for i in range(length)
-    ])
+    return ''.join([random.choice(alphabet) for i in range(length)])
 
 
 def pretty_time(seconds):

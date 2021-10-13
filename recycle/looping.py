@@ -1,6 +1,11 @@
 import six
 import itertools
 
+try:
+    from collections.abc import Iterable
+except ImportError:
+    pass
+
 
 def grouper(size, iterable):
     """
@@ -27,7 +32,7 @@ def grouper(size, iterable):
         n = size
         if sizeiter:
             try:
-                n = size.next()
+                n = next(size)
             except StopIteration:
                 return
         chunk = tuple(itertools.islice(it, n))
@@ -49,6 +54,15 @@ def fixed_size_grouper(n, iterable, fillvalue=None):
 def flatten(iterable):
     """Flatten one level of nesting"""
     return itertools.chain.from_iterable(iterable)
+
+
+def flatten_deep(iterable):
+    """Flatten any level of nesting"""
+    for item in iterable:
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
+            yield from flatten_deep(item)
+        else:
+            yield item
 
 
 def unique(iterable):

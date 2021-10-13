@@ -14,6 +14,9 @@ def test_xls_reader():
     assert data[1][0] == 1
     assert data[4][3] == 'fourth'
 
+    data = list(xls_utils.xls_reader(path, sheet_index=1))
+    assert data == []
+
 
 def test_xls_dict_reader():
     path = os.path.join(DATA_DIR, 'test.xlsx')

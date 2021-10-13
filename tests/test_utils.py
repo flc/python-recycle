@@ -1,3 +1,4 @@
+import string
 import pytest
 
 from recycle import utils
@@ -21,6 +22,12 @@ def test_gen_random_id():
 def test_gen_random_string():
     rstr = utils.gen_random_string(length=10)
     assert len(rstr) == 10
+
+    alphabet = string.digits
+    rstr = utils.gen_random_string(length=10**4, alphabet=alphabet)
+    assert len(rstr) == 10**4
+    for c in rstr:
+        assert c in alphabet
 
 
 @pytest.mark.parametrize(
