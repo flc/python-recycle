@@ -56,15 +56,6 @@ def flatten(iterable):
     return itertools.chain.from_iterable(iterable)
 
 
-def flatten_deep(iterable):
-    """Flatten any level of nesting"""
-    for item in iterable:
-        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
-            yield from flatten_deep(item)
-        else:
-            yield item
-
-
 def unique(iterable):
     seen = set()  # memory hotspot
     add = seen.add
