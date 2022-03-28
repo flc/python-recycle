@@ -19,7 +19,7 @@ def file_line_count(path, open_func=open, buf_size=1024**2):
 
 def gzip_compress_existing_file(path, keep_original=False, compresslevel=9):
     f_in = open(path, 'rb')
-    new_path = '{}.gz'.format(path)
+    new_path = f'{path}.gz'
     f_out = gzip.open(new_path, 'wb', compresslevel)
     f_out.writelines(f_in)
     f_out.close()
@@ -56,8 +56,7 @@ def tail_file_bytes(path, bytes=1000):
     jump_to = max(size - bytes, 0)
     with open_func(path) as f:
         f.seek(jump_to)
-        for line in f:
-            yield line
+        yield from f
 
 
 def checksum_file(path, hasher_func=hashlib.md5, buf_size=1024**2):

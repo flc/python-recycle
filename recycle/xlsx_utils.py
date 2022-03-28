@@ -8,8 +8,7 @@ def xlsx_reader(path, sheet_index=0):
     except IndexError:
         return []
 
-    for values in sheet.values:
-        yield values
+    yield from sheet.values
 
 
 def xlsx_dict_reader(*args, **kwargs):

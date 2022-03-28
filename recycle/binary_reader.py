@@ -12,7 +12,7 @@ class BinaryReaderEOFException(Exception):
         return 'Not enough bytes in file to satisfy read request'
 
 
-class BinaryReader(object):
+class BinaryReader:
 
     # Map well-known type names into struct format characters.
     types = {
@@ -30,7 +30,7 @@ class BinaryReader(object):
         }
 
     def __init__(self, path_or_buff):
-        if isinstance(path_or_buff, six.string_types):
+        if isinstance(path_or_buff, str):
             self.file = open(path_or_buff, 'rb')
         else:
             self.file = path_or_buff

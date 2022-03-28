@@ -44,10 +44,7 @@ def grouper(size, iterable):
 def fixed_size_grouper(n, iterable, fillvalue=None):
     """Collect data into fixed-length chunks or blocks"""
     args = [iter(iterable)] * n
-    if six.PY3:
-        func = itertools.zip_longest
-    else:
-        func = itertools.izip_longest
+    func = itertools.zip_longest
     return func(fillvalue=fillvalue, *args)
 
 

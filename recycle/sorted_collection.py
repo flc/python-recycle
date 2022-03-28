@@ -3,7 +3,7 @@ from bisect import bisect_left, bisect_right
 from operator import itemgetter
 
 
-class SortedCollection(object):
+class SortedCollection:
     '''Sequence sorted by a key function.
 
     SortedCollection() is much easier to work with than using bisect() directly.

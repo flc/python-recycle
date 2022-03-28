@@ -69,10 +69,10 @@ def prefix_dict_keys(dictionary, prefix):
     """
     Prefixes the keys of the dictionary with prefix.
     """
-    return dict(
-        ("".join([prefix, k]), v)
+    return {
+        "".join([prefix, k]): v
         for k, v in dictionary.items()
-    )
+    }
 
 
 def words_splitter(s, chars=75, delimiter="\n", splitter=" "):
