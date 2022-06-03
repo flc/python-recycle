@@ -1,15 +1,16 @@
-import openpyxl
+import pylightxl
 
 
 def xlsx_reader(path, sheet_index=0):
-    wb = openpyxl.load_workbook(filename=path, read_only=True)
+    db = pylightxl.readxl(fn=path)
     try:
-        sheet = wb[wb.sheetnames[sheet_index]]
+        sheet = db.ws(ws=db.ws_names[sheet_index])
     except IndexError:
         return []
 
-    for values in sheet.values:
-        yield values
+    for row in sheet.rows:
+        yield row
+
 
 
 def xlsx_dict_reader(*args, **kwargs):
