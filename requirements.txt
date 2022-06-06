@@ -1,4 +1,4 @@
-openpyxl==3.0.9
+pylightxl==1.59
 xlrd==1.2.0
 ordered-set==4.1.0
 six==1.16.0
