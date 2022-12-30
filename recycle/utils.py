@@ -1,6 +1,7 @@
 import random
 import string
 import time
+from decimal import Decimal, ROUND_HALF_UP
 
 
 def split_to_equal_parts(iterable, length):
@@ -89,3 +90,23 @@ def words_splitter(s, chars=75, delimiter="\n", splitter=" "):
             sub = []
     out.append(sub)
     return delimiter.join([splitter.join(s) for s in out])
+
+
+def decimal_round(number, ndigits=0):
+    """"
+    This function is to overcome the float rounding issues:
+    https://docs.python.org/3/library/functions.html?highlight=round#round
+
+    E.g.:
+    In [1]: round(90.335, 2)
+    Out[1]: 90.33
+    In [5]: round(90.335000000000001, 2)
+    Out[5]: 90.34
+    In [6]: round(90.3350000000000001, 2)
+    Out[6]: 90.33
+    """
+    if isinstance(number, (float, int)):
+        number = str(number)
+    if isinstance(number, str):
+        number = Decimal(number)
+    return number.quantize(Decimal(10) ** -ndigits, rounding=ROUND_HALF_UP)
