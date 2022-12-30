@@ -1,5 +1,6 @@
 import string
 import pytest
+from decimal import Decimal
 
 from recycle import utils
 
@@ -120,3 +121,33 @@ def test_prefix_dict_keys(dictionary, prefix, expected):
 )
 def test_words_splitted(s, chars, delimiter, splitter, expected):
     assert utils.words_splitter(s, chars, delimiter, splitter) == expected
+
+
+
+@pytest.mark.parametrize(
+    'num,ndigits,expected', [
+        (2.675, 2, 2.68),
+        ('2.675', 2, 2.68),
+        (90.335, 0, 90),
+        (90.335, 1, 90.3),
+        (90.335, 2, 90.34),
+        (90.335, 3, 90.335),
+        (90.335, 4, 90.335),
+        ('90.335', 0, 90),
+        ('90.335', 1, 90.3),
+        ('90.335', 2, 90.34),
+        ('90.335', 3, 90.335),
+        ('90.335', 4, 90.335),
+        (Decimal('90.335'), 0, 90),
+        (Decimal('90.335'), 1, 90.3),
+        (Decimal('90.335'), 2, 90.34),
+        (Decimal('90.335'), 3, 90.335),
+        (Decimal('90.335'), 4, 90.335),
+        (90, 0, 90),
+        (90, 1, 90),
+        ('90', 0, 90),
+        ('90', 1, 90),
+    ]
+)
+def test_decimal_round(num, ndigits, expected):
+    assert float(utils.decimal_round(num, ndigits)) == expected
