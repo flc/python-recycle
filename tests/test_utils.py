@@ -123,7 +123,6 @@ def test_words_splitted(s, chars, delimiter, splitter, expected):
     assert utils.words_splitter(s, chars, delimiter, splitter) == expected
 
 
-
 @pytest.mark.parametrize(
     'num,ndigits,expected', [
         (2.675, 2, 2.68),
@@ -151,3 +150,24 @@ def test_words_splitted(s, chars, delimiter, splitter, expected):
 )
 def test_decimal_round(num, ndigits, expected):
     assert float(utils.decimal_round(num, ndigits)) == expected
+
+
+@pytest.mark.parametrize(
+    'num,multiple,dir,expected', [
+        (1, 1, 'up', 1),
+        (2, 5, 'up', 5),
+        (2, 5, 'down', 0),
+        (2, 5, 'round', 0),
+        (10, 5, 'up', 10),
+        (10, 5, 'down', 10),
+        (10, 5, 'round', 10),
+        (11, 10, 'up', 20),
+        (11, 10, 'down', 10),
+        (11, 10, 'round', 10),
+        (13, 10, 'round', 10),
+        (14, 10, 'round', 10),
+        (15, 10, 'round', 20),
+    ]
+)
+def test_round_to_multiple(num, multiple, dir, expected):
+    assert utils.round_to_multiple(num, multiple, dir) == expected
