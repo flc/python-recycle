@@ -2,6 +2,7 @@ import random
 import string
 import time
 from decimal import Decimal, ROUND_HALF_UP
+from math import ceil, floor
 
 
 def split_to_equal_parts(iterable, length):
@@ -110,3 +111,12 @@ def decimal_round(number, ndigits=0):
     if isinstance(number, str):
         number = Decimal(number)
     return number.quantize(Decimal(10) ** -ndigits, rounding=ROUND_HALF_UP)
+
+
+def round_to_multiple(number, multiple, dir='up'):
+    div = number / multiple
+    if dir == 'up':
+        return multiple * ceil(div)
+    elif dir == 'down':
+        return multiple * floor(div)
+    return multiple * round(div)
