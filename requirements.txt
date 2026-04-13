@@ -1,4 +1,4 @@
 pylightxl==1.59
 xlrd==1.2.0
-pytest==6.2.5
+pytest==9.0.3
 pytest-cov==3.0.0
